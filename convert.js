@@ -5,10 +5,6 @@ const name_fragment = "fragment";
 const name_variable = "variables.json";
 const name_doc_folder = "site";
 
-// variable is a single .md
-// fragment might have child directory with child file
-// fragment should use variable true
-
 const _getAbsPath = (father, child) => `${father}/${child}`;
 const _getChildrenAbsPaths = path_abs => {
   return fs.readdirSync(path_abs).map(item => _getAbsPath(path_abs, item));
@@ -163,4 +159,4 @@ const main = path_site => {
   console.log(`Documents convention Finished`);
 };
 
-main(path.resolve(__dirname, "site/"));
+main(path.resolve(__dirname, `${name_doc_folder}/`));
