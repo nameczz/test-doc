@@ -30,7 +30,7 @@ const _splitDirectoryAndFile = paths_abs => {
   });
   return { directories, markdowns, jsons };
 };
-const _replaceContent = (match, target, content) => {
+const _replaceContent = (match, target = "", content) => {
   const len = match.length;
   const i = content.indexOf(match);
   const c_before = content.slice(0, i);

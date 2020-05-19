@@ -6,5 +6,6 @@ b should be local => guides variable b
 c should be local => guides variable c
 
 d should be local => #### this is fragment.root
+GLOBAL variable a
 
 
