@@ -58,7 +58,7 @@ const _replaceFragment = (content, map_fragment, language) => {
   return content;
 };
 const _replaceVariable = (content, variable) => {
-  const regex = /\{\{variables.{0,1000}\}\}/gi;
+  const regex = /\{\{var\..{0,1000}\}\}/gi;
   const matches = content.match(regex);
   if (matches) {
     // console.log(matches);

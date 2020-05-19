@@ -1,2 +1,2 @@
 #### this is fragment.root
-{{variables.a}}
+{{var.a}}
