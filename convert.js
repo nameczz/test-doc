@@ -55,7 +55,7 @@ const _replaceFragment = (content, map_fragment, language) => {
   }
   return content;
 };
-const _replaceVariable = (content, variable) => {
+const _replaceVariable = (content="", variable) => {
   const regex = /\{\{var\..{0,1000}\}\}/gi;
   const matches = content.match(regex);
   if (matches) {
@@ -184,3 +184,6 @@ main(
   path.resolve(__dirname, `${name_doc_folder}/`),
   path.resolve(__dirname, `${name_doc_target}/`)
 );
+
+
+TODO: 目前fragment会被遍历多次,没必要. 确认每个folder有且仅有一个fragent根目录再修改
