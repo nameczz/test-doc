@@ -6,6 +6,7 @@ const name_fragment = "fragment";
 const name_variable = "variables.json";
 const name_doc_folder = "src";
 const name_doc_target = "site";
+const chokidar = require("chokidar");
 
 const _getAbsPath = (father, child) => `${father}/${child}`;
 const _getChildrenAbsPaths = path_abs => {
@@ -55,7 +56,7 @@ const _replaceFragment = (content, map_fragment, language) => {
   }
   return content;
 };
-const _replaceVariable = (content="", variable) => {
+const _replaceVariable = (content = "", variable) => {
   const regex = /\{\{var\..{0,1000}\}\}/gi;
   const matches = content.match(regex);
   if (matches) {
@@ -170,7 +171,7 @@ const main = (path_site, path_target) => {
   if (sites_next.length) {
     ncp(path_site, path_target, function(err) {
       if (err) {
-        return console.error(err);
+        // return console.error(err);
       }
       convertAll(sites_next);
       console.log(`Documents convention Finished`);
@@ -180,10 +181,27 @@ const main = (path_site, path_target) => {
   }
 };
 
-main(
-  path.resolve(__dirname, `${name_doc_folder}/`),
-  path.resolve(__dirname, `${name_doc_target}/`)
-);
+let timeout;
+const startWatch = () => {
+  const watcher = chokidar.watch(
+    path.resolve(__dirname, `${name_doc_folder}/`)
+  );
+  const run = (event, path_abs) => {
+    if (timeout) {
+      clearTimeout(timeout);
+    }
+    timeout = setTimeout(() => {
+      main(
+        path.resolve(__dirname, `${name_doc_folder}/`),
+        path.resolve(__dirname, `${name_doc_target}/`)
+      );
+    }, 3000);
+  };
+  watcher.on("all", run).on("error", error => log(`Watcher error: ${error}`));
+};
 
+startWatch();
 
-TODO: 目前fragment会被遍历多次,没必要. 确认每个folder有且仅有一个fragent根目录再修改
+/**
+ * TODO: 目前fragment会被遍历多次, 没必要.确认每个folder有且仅有一个fragent根目录再修改;
+ */
