@@ -1,0 +1,11 @@
+{
+  "name": "test-doc",
+  "version": "1.0.0",
+  "main": "index.js",
+  "repository": "git@github.com:nameczz/test-doc.git",
+  "author": "zhen.an <zhen.an@zilliz.com>",
+  "license": "MIT",
+  "dependencies": {
+    "lodash": "^4.17.15"
+  }
+}
