@@ -113,7 +113,6 @@ const _parseVariable = (path_abs, map_variable = {}) => {
   // console.log({ ...map_variable, ...obj});
   return merge(map_variable, obj);
 };
-
 function convert(target, map_fragment = {}, map_variable = {}) {
   // 获取目录[fragment, variable, ....]
   const res = fs.readdirSync(target) || [];
@@ -156,14 +155,12 @@ function convert(target, map_fragment = {}, map_variable = {}) {
     convert(directory, map_fragment, map_variable);
   });
 }
-
 function convertAll(targets) {
   // console.log(`targets is : ${targets}`);
   targets.forEach(target => {
     convert(target);
   });
 }
-
 const main = (path_site, path_target) => {
   console.log(`Documents convention Start`);
   const res = fs.readdirSync(path_site) || [];
