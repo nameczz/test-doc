@@ -1,9 +1,11 @@
 const merge = require("lodash/merge");
 const fs = require("fs");
 const path = require("path");
+const ncp = require("ncp").ncp;
 const name_fragment = "fragment";
 const name_variable = "variables.json";
-const name_doc_folder = "site";
+const name_doc_folder = "src";
+const name_doc_target = "site";
 
 const _getAbsPath = (father, child) => `${father}/${child}`;
 const _getChildrenAbsPaths = path_abs => {
@@ -18,9 +20,9 @@ const _splitDirectoryAndFile = paths_abs => {
   paths_abs.forEach(path_abs => {
     if (_isDirectory(path_abs)) {
       directories.push(path_abs);
-    } else if (path_abs.indexOf(".md") > -1) {
+    } else if (path_abs.indexOf(".md") === path_abs.length - 3) {
       markdowns.push(path_abs);
-    } else if (path_abs.indexOf(".json")) {
+    } else if (path_abs.indexOf(".json") === path_abs.length - 5) {
       jsons.push(path_abs);
     }
   });
@@ -84,10 +86,11 @@ const _reWriteFile = (path_abs, map_fragment, map_variable) => {
     .split("/")[0];
   content = _replaceFragment(content, map_fragment, language);
   content = _replaceVariable(content, map_variable);
-  return fs.writeFileSync(path_abs, content);
+  const path_target = path_abs.replace(name_doc_folder, name_doc_target);
+  return fs.writeFileSync(path_target, content);
 };
-const _parseFragment = (path_abs, map_fragment) => {
-  const res = _getChildrenAbsPaths(path_abs);
+const _parseFragment = (path_abs, map_fragment = {}) => {
+  const res = _getChildrenAbsPaths(path_abs) || [];
   const { directories, markdowns } = _splitDirectoryAndFile(res);
   if (markdowns.length) {
     markdowns.forEach(path_abs => {
@@ -104,24 +107,33 @@ const _parseFragment = (path_abs, map_fragment) => {
   // console.log(JSON.stringify(map_fragment));
   return map_fragment;
 };
-const _parseVariable = (path_abs, map_variable) => {
+const _parseVariable = (path_abs, map_variable = {}) => {
   const obj = JSON.parse(fs.readFileSync(path_abs).toString());
   // console.log({ ...map_variable, ...obj});
   return merge(map_variable, obj);
 };
 
-async function convert(target, map_fragment = {}, map_variable = {}) {
+function convert(target, map_fragment = {}, map_variable = {}) {
   // 获取目录[fragment, variable, ....]
-  const res = fs.readdirSync(target);
-  const targets = res
-    .filter(name => name !== name_fragment && name !== name_variable)
-    .map(item => _getAbsPath(target, item));
+  const res = fs.readdirSync(target) || [];
+  const targets = [];
+  let fragmentFolder, variableFile;
+  res.forEach(name => {
+    const isContent = name !== name_fragment && name !== name_variable;
+    if (isContent) {
+      targets.push(_getAbsPath(target, name));
+    }
+    if (name === name_fragment) {
+      fragmentFolder = name;
+    }
+    if (name === name_variable) {
+      variableFile = name;
+    }
+  });
   // console.log(targets)
   const { directories, markdowns } = _splitDirectoryAndFile(targets);
   // console.log(directories, markdowns);
   // 获取fragment和顶部变量,开始遍历和替换
-  const fragmentFolder = res.find(item => item === name_fragment);
-  const variableFile = res.find(item => item === name_variable);
   if (!!fragmentFolder) {
     map_fragment = _parseFragment(
       _getAbsPath(target, fragmentFolder),
@@ -145,18 +157,30 @@ async function convert(target, map_fragment = {}, map_variable = {}) {
 }
 
 function convertAll(targets) {
-  //   console.log(`targets is : ${targets}`);
+  // console.log(`targets is : ${targets}`);
   targets.forEach(target => {
     convert(target);
   });
 }
 
-const main = path_site => {
+const main = (path_site, path_target) => {
   console.log(`Documents convention Start`);
-  const res = fs.readdirSync(path_site);
+  const res = fs.readdirSync(path_site) || [];
   const sites_next = res.map(item => _getAbsPath(path_site, item));
-  convertAll(sites_next);
-  console.log(`Documents convention Finished`);
+  if (sites_next.length) {
+    ncp(path_site, path_target, function(err) {
+      if (err) {
+        return console.error(err);
+      }
+      convertAll(sites_next);
+      console.log(`Documents convention Finished`);
+    });
+  } else {
+    console.warn(`Documents is Empty`);
+  }
 };
 
-main(path.resolve(__dirname, `${name_doc_folder}/`));
+main(
+  path.resolve(__dirname, `${name_doc_folder}/`),
+  path.resolve(__dirname, `${name_doc_target}/`)
+);
