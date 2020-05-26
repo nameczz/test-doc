@@ -4,13 +4,13 @@ on:
   push:
     # file paths to consider in the event. Optional; defaults to all.
     paths:
-      - "doc/**"
+      - "src/**"
       - ".github/workflows/**"
       - "!**.md"
   pull_request:
     # file paths to consider in the event. Optional; defaults to all.
     paths:
-      - "doc/**"
+      - "src/**"
       - ".github/workflows/**"
       - "!**.md"
 
@@ -24,13 +24,4 @@ jobs:
     # Steps represent a sequence of tasks that will be executed as part of the job
     steps:
       - name: Check out Git repository
-      - uses: actions/checkout@v1
-
-#       - name: Change path
-#       - run: cd ../
-
-#       - name: Install md2md
-#       - uses: borales/actions-yarn@v2.0.0
-#         with:
-#           cmd: install md2md -g # will run `yarn install` command
-
+        uses: actions/checkout@v1
