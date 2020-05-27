@@ -32,7 +32,9 @@ jobs:
           git clone https://.:${{ secrets.GITHUB_TOKEN }}@github.com/nameczz/docs-1.git target
           cd target
           rm -rf *
-          cp ../test-doc/ ./
+          cd ../
+          cp -avr ./test-doc/ ./target/
+          cd target
           git add .
           git commit -m "Automatic publish from git action"
-          git push target master
+          git push origin master
