@@ -26,12 +26,17 @@ jobs:
       - name: Check out Git repository
         uses: actions/checkout@v1
 
-      - name: Md2md
-        run: |
-          sudo npm install md2md -g
-          md2md
-          rm -rf doc_from/*
-          mv doc_to site
+      - name: Extract branch name
+        shell: bash
+        run: echo "##[set-output name=branch;]$(echo ${GITHUB_REF#refs/heads/})"
+        id: extract_branch
+
+      # - name: Md2md
+      #   run: |
+      #     sudo npm install md2md -g
+      #     md2md
+      #     rm -rf doc_from/*
+      #     mv doc_to site
 
       - name: Delete And Push
         run: |
@@ -40,9 +45,11 @@ jobs:
           git config --global user.email "nameczz@126.com"
           git config --global user.name "nameczz"
           cd target
+          git checkout -b ${{ steps.extract_branch.outputs.branch }}
+          git pull origin ${{ steps.extract_branch.outputs.branch }}
           rm -rf *
           cd ../
-          cp -avr ./test-doc/doc-to/** ./target/
+          cp -avr ./test-doc/site/** ./target/
           cd target
           git add .
           git commit -m "Bot add"
