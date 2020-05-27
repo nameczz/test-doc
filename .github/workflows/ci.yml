@@ -28,7 +28,7 @@ jobs:
 
       - name: Md2md
         run: |
-          yarn install md2md -g
+          sudo npm install md2md -g
           md2md
           rm -rf doc_from/*
           mv doc_to site
