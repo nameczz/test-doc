@@ -36,24 +36,19 @@ jobs:
           rm -rf *
           git add .
           git commit -m 'Bot delete all'
-          
-      - name: Push Delete
-        uses: ad-m/github-push-action@master
-        with:
-          github_token: ${{ secrets.P_GITHUB_TOKEN }}
-          repository: nameczz/a-project
+          git push origin master
       
-      - name: Add
-        run: |  
-          cd ../
-          cp -avr ./test-doc/** ./target/
-          cd target
-          git add .
-          git commit -m "Bot add"
+#       - name: Add
+#         run: |  
+#           cd ../
+#           cp -avr ./test-doc/** ./target/
+#           cd target
+#           git add .
+#           git commit -m "Bot add"
         
-      - name: Push changes
-        uses: ad-m/github-push-action@master
-        with:
-          github_token: ${{ secrets.P_GITHUB_TOKEN }}
-          repository: nameczz/a-project
+#       - name: Push changes
+#         uses: ad-m/github-push-action@master
+#         with:
+#           github_token: ${{ secrets.P_GITHUB_TOKEN }}
+#           repository: nameczz/a-project
            
