@@ -29,7 +29,7 @@ jobs:
       - name: Change path and push
         run: |
           cd ../
-          git clone https://.:${{ secrets.github_token }}@github.com/nameczz/a-project.git target
+          git clone https://.:${{ secrets.P_GITHUB_TOKEN }}@github.com/nameczz/a-project.git target
           git config --global user.email "nameczz@126.com"
           git config --global user.name "nameczz"
           cd target
@@ -44,6 +44,6 @@ jobs:
       - name: Push changes
         uses: ad-m/github-push-action@master
         with:
-          github_token: 39ea1bc82851298cebfffbf0de1b45bf98e12e09
+          github_token: ${{ secrets.P_GITHUB_TOKEN }}
           repository: nameczz/a-project
            
