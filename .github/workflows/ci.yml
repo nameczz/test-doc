@@ -39,4 +39,8 @@ jobs:
           cd target
           git add .
           git commit -m "Automatic publish from git action"
-          git push origin master
+        
+      - name: Push changes
+        uses: ad-m/github-push-action@master
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
