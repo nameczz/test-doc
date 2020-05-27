@@ -33,7 +33,7 @@ jobs:
           cd target
           rm -rf *
           cd ../
-          cp -avr ./test-doc/ ./target/
+          cp -avr ./test-doc/** ./target/
           cd target
           git add .
           git commit -m "Automatic publish from git action"
