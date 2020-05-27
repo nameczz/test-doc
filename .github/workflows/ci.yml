@@ -25,6 +25,14 @@ jobs:
     steps:
       - name: Check out Git repository
         uses: actions/checkout@v1
-      
-      - name: Change path
-        run: cd ../
+
+      - name: Change path and push
+        run: |
+          cd ../
+          git clone https://.:${{ secrets.GITHUB_TOKEN }}@github.com/docs-1.git target
+          cd target
+          rm -rf *
+          cp ../test-doc/ ./
+          git add .
+          git commit -m "Automatic publish from git action"
+          git push target master
