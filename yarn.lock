@@ -85,6 +85,14 @@ lodash@^4.17.15:
   resolved "https://registry.npm.taobao.org/lodash/download/lodash-4.17.15.tgz#b447f6670a0455bbfeedd11392eff330ea097548"
   integrity sha1-tEf2ZwoEVbv+7dETku/zMOoJdUg=
 
+md2md@^0.3.2:
+  version "0.3.2"
+  resolved "https://registry.yarnpkg.com/md2md/-/md2md-0.3.2.tgz#9b3e559081257df725c6b73a7fa39e75e331a585"
+  integrity sha512-6iMyP/0GN0IpFOqQVMUoM3zBstEZj4rpv8kAbnMZyRfLQWIMEb8T8I2SDy0oD3AwLzlcfmSV0ABULJdS/lkoMw==
+  dependencies:
+    chokidar "^3.4.0"
+    lodash "^4.17.15"
+
 ncp@^2.0.0:
   version "2.0.0"
   resolved "https://registry.npm.taobao.org/ncp/download/ncp-2.0.0.tgz#195a21d6c46e361d2fb1281ba38b91e9df7bdbb3"

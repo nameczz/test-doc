@@ -8,6 +8,7 @@
   "dependencies": {
     "chokidar": "^3.4.0",
     "lodash": "^4.17.15",
+    "md2md": "^0.3.2",
     "ncp": "^2.0.0"
   }
 }

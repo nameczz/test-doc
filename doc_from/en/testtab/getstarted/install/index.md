@@ -1,6 +1,6 @@
 ---
-label Go
-order 1
+label: Go
+order: 1
 ---
 
 ## install
