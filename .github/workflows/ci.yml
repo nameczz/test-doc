@@ -52,4 +52,4 @@ jobs:
           cd target
           git add .
           git commit -m "Bot add"
-          git push origin master
+          git push origin ${{ steps.extract_branch.outputs.branch }}
