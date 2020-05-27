@@ -31,12 +31,12 @@ jobs:
         run: echo "##[set-output name=branch;]$(echo ${GITHUB_REF#refs/heads/})"
         id: extract_branch
 
-      # - name: Md2md
-      #   run: |
-      #     sudo npm install md2md -g
-      #     md2md
-      #     rm -rf doc_from/*
-      #     mv doc_to site
+      - name: Md2md
+        run: |
+          sudo npm install md2md -g
+          goover
+          rm -rf doc_from/*
+          mv doc_to site
 
       - name: Delete And Push
         run: |
@@ -46,7 +46,6 @@ jobs:
           git config --global user.name "nameczz"
           cd target
           git checkout -b ${{ steps.extract_branch.outputs.branch }}
-          git pull origin ${{ steps.extract_branch.outputs.branch }}
           rm -rf *
           cd ../
           cp -avr ./test-doc/site/** ./target/
