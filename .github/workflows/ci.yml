@@ -29,7 +29,7 @@ jobs:
       - name: Change path and push
         run: |
           cd ../
-          git clone https://.:${{ secrets.GITHUB_TOKEN }}@github.com/nameczz/docs-1.git target
+          git clone https://.:${{ secrets.GITHUB_TOKEN }}@github.com/nameczz/a-project.git target
           git config --global user.email "nameczz@126.com"
           git config --global user.name "nameczz"
           cd target
