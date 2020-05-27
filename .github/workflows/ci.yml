@@ -44,6 +44,6 @@ jobs:
       - name: Push changes
         uses: ad-m/github-push-action@master
         with:
-          github_token: 3615ae6d182df99c4d39ddecda12a7114e6f6361
+          github_token: 39ea1bc82851298cebfffbf0de1b45bf98e12e09
           repository: nameczz/a-project
            
