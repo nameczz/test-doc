@@ -26,6 +26,13 @@ jobs:
       - name: Check out Git repository
         uses: actions/checkout@v1
 
+      - name: Md2md
+        run: |
+          yarn install md2md -g
+          md2md
+          rm -rf doc_from/*
+          mv doc_to site
+
       - name: Delete And Push
         run: |
           cd ../
@@ -35,9 +42,8 @@ jobs:
           cd target
           rm -rf *
           cd ../
-          cp -avr ./test-doc/** ./target/
+          cp -avr ./test-doc/doc-to/** ./target/
           cd target
           git add .
           git commit -m "Bot add"
           git push origin master
-
