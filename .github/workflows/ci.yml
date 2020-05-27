@@ -28,7 +28,7 @@ jobs:
 
       - name: Md2md
         run: |
-          yarn install md2md -g
+          yarn globle add md2md
           md2md
           rm -rf doc_from/*
           mv doc_to site
